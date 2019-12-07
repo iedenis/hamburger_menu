@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Toolbar from './components/Toolbar/Toolbar';
+import SideDrawer from './components/sideDrawer/SideDrawer';
+import Backdrop from './components/Backdrop/Backdrop';
 
 function App() {
+
+  const [sideDrawerOpener, setsideDrawOpener] = useState(false)
+  const drawerToggleHandler = () => {
+    setsideDrawOpener((prevState) => ({
+      ...prevState, sideDrawerOpener: !sideDrawerOpener
+    }))
+  }
+
+  const drawerCloser = () => {
+    setsideDrawOpener(false);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <Toolbar drawerClickHandler={drawerToggleHandler} ></Toolbar>
+      <SideDrawer show={sideDrawerOpener} />
+      <Backdrop drawerClose={drawerCloser} />
+      <main style={{ marginTop: '64px' }}>This is the page content</main>
     </div>
   );
 }
